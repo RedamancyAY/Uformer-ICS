@@ -3,9 +3,19 @@
 
 ## Prepare datasets
 
-We use the COCO datasets for training.
-
-
+We use the COCO datasets for training and use the set5, set11, set14, bsd100, and urban100 for testing. Please download these datasets and specify the absolute path of these datasets in `data/make_dataset.py`:
+```python
+DATA_PATH = {
+    "coco": "path_of/COCO",
+    "set5": "path_of/Set5",
+    "set11": "path_of/Set11",
+    "set14": "path_of/Set14",
+    "bsd100": "path_of/BSD100",
+    "urban100": "path_of/Urban100",
+    'set1024': "path_of/Set1024", # used for testing time complexity
+    'test_for_visual_comparison':"path_of/test_for_visual_comparison" # used for visual comparison,
+}
+```
 
 ## Training and Testing
 
