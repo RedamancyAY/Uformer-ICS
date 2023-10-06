@@ -1,6 +1,11 @@
 # Uformer-ICS
 
 
+## Prepare datasets
+
+We use the COCO datasets for training.
+
+
 
 ## Training and Testing
 
@@ -21,7 +26,7 @@ python train.py --gpu 0 --cfg "Ours/coco/999";
 
 ### Testing scripts
 
-To test our methods, just add some arguments at the end of training scripts. 
+To test our methods, just add some arguments at the end of training scripts.
 
 1. test on different datasets, e.g. Set5, Set11, Set14, BSD100...
 
