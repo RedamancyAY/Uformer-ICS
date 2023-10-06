@@ -1,0 +1,7 @@
+
+Model:
+  sampling_mode: "adaptive"
+  saliency_mode: "sm"
+  sr: 0.25
+  loss_type: 'no-l3*'
+            

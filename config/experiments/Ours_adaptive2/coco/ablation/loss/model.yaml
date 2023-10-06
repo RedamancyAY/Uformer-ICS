@@ -1,0 +1,8 @@
+Model:
+  sampling_mode: "adaptive"
+  saliency_mode: "sm"
+
+  earlystop: 10
+  epochs: 200
+  cs_proj_learnable_step: True
+  conv_after_fusion: True

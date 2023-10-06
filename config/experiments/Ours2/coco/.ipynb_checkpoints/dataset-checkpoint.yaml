@@ -1,0 +1,6 @@
+Dataset:
+  trainset: coco
+  batch_size: 16
+  train_num: 40100
+  train_size: 128
+  val_rate: 100.

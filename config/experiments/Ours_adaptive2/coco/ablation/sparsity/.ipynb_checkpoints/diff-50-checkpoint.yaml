@@ -1,0 +1,3 @@
+Model:
+  sr: 0.5
+  saliency_mode: "diff"

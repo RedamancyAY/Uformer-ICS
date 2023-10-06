@@ -1,0 +1,8 @@
+Model:
+  sampling_mode: "constant"
+
+  earlystop: 10
+  epochs: 200
+  cs_proj_learnable_step: True
+  conv_after_fusion: True
+  loss_type: 'no-l3'

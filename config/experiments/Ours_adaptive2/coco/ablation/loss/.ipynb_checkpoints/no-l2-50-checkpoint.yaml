@@ -1,0 +1,5 @@
+
+Model:
+  sr: 0.5
+  loss_type: 'no-l2'
+            

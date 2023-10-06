@@ -1,0 +1,3 @@
+Model:
+  sr: 0.10
+  fuse_type: 'add'

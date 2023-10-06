@@ -1,0 +1,3 @@
+Model:
+  sr: 0.01
+  saliency_mode: "std"
