@@ -21,17 +21,17 @@ from yacs.config import CfgNode as ConfigurationNode
 
 # # 默认配置
 
-DATA_PATH = {
-    "coco": "/usr/local/ay_data/dataset/1-CS/COCO",
-    "set5": "/usr/local/ay_data/dataset/1-CS/Set5",
-    "set14": "/usr/local/ay_data/dataset/1-CS/Set14",
-    "bsd68": "/usr/local/ay_data/dataset/1-CS/BSD68",
-    "bsd100": "/usr/local/ay_data/dataset/1-CS/BSD100",
-    "cbsd68": "/usr/local/ay_data/dataset/1-CS/CBSD68",
-    "train400": "/usr/local/ay_data/dataset/1-CS/train400",
-    "urban100": "/usr/local/ay_data/dataset/1-CS/Urban100",
-}
-_paths = ConfigurationNode(DATA_PATH)
+# DATA_PATH = {
+#     "coco": "/usr/local/ay_data/dataset/1-CS/COCO",
+#     "set5": "/usr/local/ay_data/dataset/1-CS/Set5",
+#     "set14": "/usr/local/ay_data/dataset/1-CS/Set14",
+#     "bsd68": "/usr/local/ay_data/dataset/1-CS/BSD68",
+#     "bsd100": "/usr/local/ay_data/dataset/1-CS/BSD100",
+#     "cbsd68": "/usr/local/ay_data/dataset/1-CS/CBSD68",
+#     "train400": "/usr/local/ay_data/dataset/1-CS/train400",
+#     "urban100": "/usr/local/ay_data/dataset/1-CS/Urban100",
+# }
+# _paths = ConfigurationNode(DATA_PATH)
 
 # +
 _dataset = ConfigurationNode()
@@ -72,7 +72,7 @@ _model.conv_after_fusion = False
 _model.train_phi = False
 
 __C = ConfigurationNode()
-__C.Paths = _paths
+# __C.Paths = _paths
 __C.Dataset = _dataset
 __C.Augmentation = _augmentation
 __C.Model = _model
@@ -106,5 +106,5 @@ def get_cfg_defaults(cfg_file=None, ablation=""):
         #             print("load ablation yaml in ", ablation_path)
         res.merge_from_file(cfg_file)
 
-    assert res.Dataset.trainset in DATA_PATH.keys()
+    # assert res.Dataset.trainset in DATA_PATH.keys()
     return res

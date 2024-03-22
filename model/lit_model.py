@@ -20,13 +20,13 @@ import pandas as pd
 import pytorch_lightning as pl
 import torch
 import torch.nn as nn
-from ay.torch.cs.lit_model import ConstantCS
+from .constantCS import ConstantCS
 from einops import rearrange
 
 from .model import CS_model
 
-from ay.torch.metrics import PSNR_SSIM
-from ay.torch.optim import Optimizers_with_selective_weight_decay
+from .psnr_ssim import PSNR_SSIM
+from .optim import Optimizers_with_selective_weight_decay
 
 
 class Uformer_ICS(ConstantCS):

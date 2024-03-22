@@ -21,7 +21,7 @@ import random
 
 import torch
 import torch.nn as nn
-from ay.torch.cs import load_phi_psi
+from .utils import load_phi_psi
 from einops import rearrange
 # -
 

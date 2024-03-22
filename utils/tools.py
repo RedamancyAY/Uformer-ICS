@@ -23,6 +23,8 @@ import shutil
 def backup_logger_file(logger_version_path):
     
     metric_file = os.path.join(logger_version_path, 'metrics.csv')
+    if not os.path.exists(metric_file):
+        return 
     m_time = os.path.getmtime(metric_file)
     m_time = datetime.datetime.fromtimestamp(m_time)
     m_time = m_time.strftime('%Y-%m-%d-%H:%M:%S')

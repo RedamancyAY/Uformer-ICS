@@ -37,18 +37,18 @@ import torch
 # print(summary.flops_forward, summary.flops_backward, summary)
 # -
 
-def test_dataset_constant(model, trainer, log_dir):
+def test_dataset_constant(model, trainer, log_dir, ckpt_path=None):
     model.start_test()
 
     for test_set in ["set5", "set11", "set14", "bsd100", "urban100"]:
     # for test_set in ["set5"]:
         test_dl = get_testset(test_set)
         model.test_on = test_set
-        trainer.test(model, test_dl)
+        trainer.test(model, test_dl, ckpt_path=ckpt_path)
     model.save_test_res(os.path.join(log_dir, "test.csv"))
 
 
-def test_dataset_adaptive(model, trainer, log_dir):
+def test_dataset_adaptive(model, trainer, log_dir, ckpt_path=None):
     model.is_training = False
     model.start_test()
 
@@ -63,13 +63,13 @@ def test_dataset_adaptive(model, trainer, log_dir):
         for test_set in ["set5", "set11", "set14", "bsd100", "urban100"]:
             test_dl = get_testset(test_set)
             model.test_on = test_set
-            trainer.test(model, test_dl)
+            trainer.test(model, test_dl, ckpt_path=ckpt_path)
         model.save_test_res(os.path.join(log_dir, "test_%d.csv"%sr))
 
 
 # ## 在几张图像上进行测试
 
-def test_images_scalable(model, trainer, name):
+def test_images_scalable(model, trainer, name, ckpt_path=None):
     model.start_test()
 
     for sr in [4, 10]:
@@ -85,10 +85,10 @@ def test_images_scalable(model, trainer, name):
             model.save_test_image = True
             model.save_dir = '0-实验结果/pics/visual_comparsion'
             model.model_name = name
-            trainer.test(model, test_dl)
+            trainer.test(model, test_dl, ckpt_path=ckpt_path)
 
 
-def test_images_constant(model, trainer, name):
+def test_images_constant(model, trainer, name, ckpt_path=None):
     model.start_test()
 
 
@@ -102,50 +102,7 @@ def test_images_constant(model, trainer, name):
         model.save_test_image = True
         model.save_dir = '0-实验结果/pics/visual_comparsion'
         model.model_name = name
-        trainer.test(model, test_dl)
+        trainer.test(model, test_dl, ckpt_path=ckpt_path)
 
 
-# ## 测试时间复杂度
 
-def test_time_complexity(model, trainer, name):
-    
-    # _sr = 0.25
-    # model.sr = _sr
-    # model.model.sr = _sr
-    # model.model.sampling_model.sr = _sr
-    
-    
-    model.start_test()
-    if hasattr(model, 'set_sr'):
-        model.set_sr(0.25)
-    
-    
-    total_params = sum(p.numel() for p in model.parameters())
-    total_trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(total_params, total_trainable_params)
-
-    print(model.device)
-
-    inp = torch.randn(1, 1, 256, 256, device=model.device)
-    ms = get_module_summary(model.model, module_args=(inp,))
-    flops = ms.flops_forward / 1e9
-    num_para = ms.num_parameters / 1e6
-    
-    print(f'FLOPs is {flops} G, parameters is {num_para} M')
-    flops_csv = '0-实验结果/datas/time/flops_para.csv'
-    if not os.path.exists(flops_csv):
-        data = pd.DataFrame(columns=['model', 'flop', 'para'])
-    else:
-        data = pd.read_csv(flops_csv, index_col=0)
-    data.loc[name] = [name, flops, num_para]
-    data.to_csv(flops_csv)
-    
-    
-    
-    for test_set in ["set1024"]:
-        test_dl = get_testset(test_set.lower())
-        model.test_on = test_set
-        trainer.test(model, test_dl)
-        model.test_res = [] 
-        trainer.test(model, test_dl)
-    model.save_test_res(os.path.join('0-实验结果/datas/time', f"{name}.csv"))

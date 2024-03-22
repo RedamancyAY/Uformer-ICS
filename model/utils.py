@@ -25,12 +25,6 @@ from timm.models.layers import DropPath
 from .swin_transformer import BasicLayer, SwinTransformerBlock
 
 
-# + tags=["active-ipynb", "style-activity"]
-# from swin_transformer import BasicLayer, SwinTransformerBlock
-# -
-
-# # Measurement matrix
-
 def Orthogonal_matrix(m: int, n: int) -> np.ndarray:
     """
     generate measurement matrix for CS model.
@@ -40,9 +34,9 @@ def Orthogonal_matrix(m: int, n: int) -> np.ndarray:
     Return:
         a matrix with shape (m, n)
     """
-
+    eps = 1e-8
     def normalize(v):
-        return v / np.sqrt(v.dot(v))
+        return v / (np.sqrt(v.dot(v)) + eps)
 
     np.random.seed(42)
     phi = np.random.normal(0, 1 / m, (m, n))
@@ -60,15 +54,26 @@ def Orthogonal_matrix(m: int, n: int) -> np.ndarray:
     return phi.astype(np.float32)
 
 
-def load_phi_psi(blk_size, sr):
+def load_phi_psi(blk_size, sr,channels=1):
+    """
+    Generate a matric: phi. The phi is for sampling, while the phi.T is for initial reconstruction.
+    
+    Args:
+        blk_size: the sampling block size. The final sample vector is of length blk_size * blk_size
+        sr: the sampling rate. if sr <=0, then the sample length is also blk_size * blk_size;\
+            else sr > 0, the sample length is int(blk_size * blk_size * sr)
+
+    Return:
+        a matrix with (blk_size * blk_size * sr, blk_size * blk_size)
+    """
+    n = blk_size**2*channels
+
     if sr <= 0:
-        matrix = Orthogonal_matrix(blk_size**2, blk_size**2)
+        matrix = Orthogonal_matrix(n, n)
     else:
-        n = blk_size**2
         m = int(n * sr)
         matrix = Orthogonal_matrix(m, n)
     return matrix
-
 
 # # Model modules
 

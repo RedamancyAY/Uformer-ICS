@@ -40,6 +40,7 @@ from utils import (
     test_dataset_adaptive,
     test_dataset_constant,
     test_images_constant,
+    test_time_complexity,
 )
 
 from data import get_testset, get_trainset
@@ -55,7 +56,6 @@ from callbacks import (
 pl.seed_everything(42)
 torch.set_float32_matmul_precision("medium")
 
-CS_root_dir = "/usr/local/ay_data/1-model_save/3-CS"
 
 # # Training
 
@@ -103,6 +103,7 @@ if __name__ == "__main__":
 
     model = Uformer_ICS(sr=cfg.Model.sr, blk_size=32, args=cfg.Model)
 
+    CS_root_dir = "/usr/local/ay_data/1-model_save/3-CS"
     args.version = 0 if (args.version == -1 and args.test) else args.version
     trainer = pl.Trainer(
         min_epochs=50 if cfg.Model.epochs > 50 else cfg.Model.epochs,
@@ -140,16 +141,27 @@ if __name__ == "__main__":
         checkpoint = os.path.join(log_dir, "checkpoints")
         ckpt_path = os.path.join(checkpoint, os.listdir(checkpoint)[0])
         print(ckpt_path)
+        model = model.load_from_checkpoint(
+            ckpt_path, sr=cfg.Model.sr, blk_size=cfg.Model.blk_size, args=cfg.Model
+        )
+        # model = model.load_from_checkpoint(ckpt_path)
         model.eval()
         model.start_test()
 
-
-        if args.test_imgs:
+        if args.test_time:
+            test_time_complexity(
+                model,
+                trainer,
+                name=args.cfg.split("/")[0]
+                if "999" not in args.cfg
+                else args.cfg.split("/")[0] + "+",
+            )
+        elif args.test_imgs:
             name = args.cfg.split("/")[0]
             name = name + "+" if "999" in args.cfg else name
-            test_images_constant(model, trainer, ckpt_path=ckpt_path,name=name)
+            test_images_constant(model, trainer, name=name)
         else:
             if "999" in args.cfg:
-                test_dataset_adaptive(model=model,ckpt_path=ckpt_path, trainer=trainer, log_dir=log_dir)
+                test_dataset_adaptive(model=model, trainer=trainer, log_dir=log_dir)
             else:
-                test_dataset_constant(model=model,ckpt_path=ckpt_path, trainer=trainer, log_dir=log_dir)
+                test_dataset_constant(model=model, trainer=trainer, log_dir=log_dir)
