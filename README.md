@@ -94,6 +94,15 @@ python train.py --gpu 0 --cfg "Ours_adaptive/coco/50" --test 1 --version 0;\
 python train.py --gpu 0 --cfg "Ours_adaptive/coco/999"  --test 1 --version 0;
 ```
 
+# Citation
 
-
-
+If the code is used in your research, please Star our repo and cite our paper:
+```
+@article{zhang2023uformer,
+  title={Uformer-ICS: A U-Shaped Transformer for Image Compressive Sensing Service},
+  author={Zhang, Kuiyuan and Hua, Zhongyun and Li, Yuanman and Zhang, Yushu and Zhou, Yicong},
+  journal={IEEE Transactions on Services Computing},
+  year={2023},
+  publisher={IEEE}
+}
+```
