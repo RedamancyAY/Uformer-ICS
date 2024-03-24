@@ -1,6 +1,6 @@
 # Uformer-ICS
 
-This repository is the codes of the [Paper](https://ieeexplore.ieee.org/abstract/document/10323186).
+This repository is the codes of the Paper [Uformer-ICS: A U-Shaped Transformer for Image Compressive Sensing Service](https://ieeexplore.ieee.org/abstract/document/10323186).
 
 
 ## Prepare datasets
