@@ -74,8 +74,9 @@ python train.py --gpu 0 --cfg "Ours_adaptive/coco/999";
 
 ### Testing scripts
 
-Please prepare ["set5", "set11", "set14", "bsd100", "urban100"] for evaluation, and give their path at `DATA_PATH`. If you want to test other datasets, please give their path at `DATA_PATH` and change the test list in `test_dataset_constant`, `test_dataset_adaptive` in the `utils/_test.py`.
+Please prepare ["set5", "set11", "set14", "bsd100", "urban100"] for evaluation, and give their paths at `DATA_PATH`. If you want to test other datasets, please give their paths at `DATA_PATH` and change the test list in the `test_dataset_constant`, `test_dataset_adaptive` functions in the `utils/_test.py`.
 
+We provided our pretrained weights, you can download it and put the unzipped files in the `CS_root_dir/Ours`. The pretrained weights is in [Google Drive](https://drive.google.com/file/d/1HBcvsEF_ePrWHMndzkdGpwJJ5TGft7-W/view?usp=sharing).
 
 ```bash
 # test Uformer-ICS without adaptive sampling
